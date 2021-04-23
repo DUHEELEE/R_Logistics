@@ -1,7 +1,7 @@
 
 
 getwd() # workingdirectory 확인
-setwd() # workingdirectory 설정
+setwd("C:/Program Files/RStudio/workingdirectory/R_Logistics") # workingdirectory 설정
 
 '
 install.packages("readxl")
@@ -28,3 +28,19 @@ ggplot(Data_니트, aes(x= 날짜, y= 니트/스웨터)) +
     scale_x_date('month')  +
     ylab("Daily Bike Checkouts") +
     xlab("")
+
+autoplot(Data_니트[,"니트/스웨터"]) +
+    ggtitle("이코노미석 탑승객: 멜버른-시드니") +
+    xlab("연도") +
+    ylab("탑승객(단위: 1000명)")
+
+as.data.frame(Data_니트)
+as.data.frame(Data_열수요)
+as.data.frame(Data_외기온도)
+    
+
+
+
+
+
+
