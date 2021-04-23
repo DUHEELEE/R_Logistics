@@ -1,0 +1,65 @@
+exam <- read.csv("csv_exam.csv")
+exam
+
+install.packages("dplyr")
+library(dplyr)
+
+'# filter 함수 / 내가 필요한 변수(행)만 추출'
+
+# 1반 학생들 추출
+exam %>% filter(class == 1)
+
+# 수학점수 50점이상학생들 추출
+exam %>%  filter(math >= 50)
+
+# And 연산
+exam %>% filter(math >= 70, english >= 70)
+exam %>% filter(math >= 70 & english >= 70)
+exam %>% filter(math >= 70) %>%  filter(english >= 70)
+
+# Or 연산 | <- shift + \
+exam %>% filter(class == 1 | class ==5)
+
+# 해당 요소가 집합 내에 포함되는지 확인
+exam %>%  filter(class %in% c(1,3,5))
+
+
+' select 함수 / 내가 필요한 변수(열)만 추출'
+ 
+exam %>% select(class, math)
+exam %>%  select(-science)
+
+# filter 와 select 혼용
+# 수학점수가 60점 이상인 학생들의 id와 수학점수만 추출
+exam %>% 
+    filter(math >= 60) %>% 
+    select(id, math)
+ 
+ exam %>% 
+    select(id, english) %>% 
+    filter(class == 1)
+
+# 주의할 점 
+# select으로 추출된 데이터에 대해서만 filter를 적용!
+
+ ' arrage 함수 / 오름차순, 내림차순 정렬'
+ 
+ # 수학점수 순으로 정렬
+exam %>%  arrange(math)
+exam %>%  arrange(desc(math))
+
+# 기준을 두개 이상 두고 싶을 때
+# 반별로 먼저 정렬 후, 수학점수 내림차순 정렬
+exam %>%  arrange(class) %>% 
+    arrange(desc(math))
+
+exam %>% arrange(class, desc(math))
+
+' mutate 함수 / 파생변수 추가'
+# 학생 별 평균점수 데이터를 추가
+exam %>% mutate(avg =(math + english + science) /3)
+exam = exam %>% mutate(avg =(math + english + science) /3)
+
+exam
+# mean (벡터데이터를 연산)
+# 데이터프레임에서 연산하고 싶을 때 mean X
