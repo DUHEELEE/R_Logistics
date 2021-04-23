@@ -1,0 +1,78 @@
+install.packages("rJava")
+source("https://install-github.me/talgalili/installr")
+installr::install.java()
+library(rJava)
+
+install.packages("multilinguer")
+install.packages("memoise")
+install.packages(c("hash", "tau", "Sejong", "RSQLite", "devtools", "bit", "rex", "lazyeval", "htmlwidgets", "crosstalk", "promises", "later", "sessioninfo", "xopen", "bit64", "blob", "DBI", "memoise", "plogr", "covr", "DT", "rcmdcheck", "rversions"), type = "binary")
+install.packages("remotes")
+remotes::install_github('haven-jeon/KoNLP', upgrade = "never", INSTALL_opts = c("--no-multiarch"))
+library(KoNLP) #한글에서 명사추출할 수 있게 도와주는 라이브러리
+
+install.packages("wordcloud2")
+library(wordcloud2)
+
+
+Sys.getenv("JAVA_HOME")
+setwd("C:/Program Files/RStudio/workingdirectory")
+getwd()
+list.files()
+
+useNIADic()
+mergeUserDic(data.frame(c("커비"), c("ncn")))
+
+text1 <- readLines("text2.txt") # text 파일을 벡터형식으로 저장
+text1
+
+text2 <- extractNoun(text1) # 벡터에서 명사를 추출하는 함수
+text2
+nrow(text2)
+view(text2)
+
+text3 <- unlist(text2)
+text3
+
+text4 <-  gsub("ㅎ", "", text3) # 의미없는 단어(불용어) 처리 
+text4 <-  gsub("ㅋ", "", text3)
+text4 <-  gsub("ㅠ", "", text3)
+text4 <-  gsub("두히", "두희", text3)
+text4 <-  gsub("!", "", text3)
+text4 <-  gsub("?", "", text3)
+text4 <-  gsub(",,", "", text3)
+text4 <-  gsub(";", "", text3)
+text4 <-  gsub("^", "", text3)
+text4 <-  gsub("ㅇㅇ", "", text3)
+text4 <-  gsub("나", "", text3)
+text4 <-  gsub("ㅋㅋ", "", text3)
+text4 <-  gsub("ㅅ", "", text3)
+text4 <-  gsub("ㅠㅠ", "", text3)
+text4 <-  gsub("", "", text3)
+text4 <-  gsub("진", "", text3)
+text4 <-  gsub("오케", "", text3)
+text4 <-  gsub("오케이", "", text3)
+text4 <-  gsub("ㅇㅋ", "", text3)
+text4 <-  gsub("ㅠㅠㅠ", "", text3)
+text4 <-  gsub("ㅋㅋㅋ", "", text3)
+text4 <-  gsub("^ㅎ^ㅎ", "", text3)
+text4 <-  gsub("", "", text3)
+text4 <-  gsub("ㅜ", "", text3)
+text4 <-  gsub("나는", "", text3)
+text4 <-  gsub("저는", "", text3)
+text4 <-  gsub("다들", "", text3)
+text4 <-  gsub("오늘", "", text3)
+text4 <-  gsub("이거", "", text3)
+text4 <-  gsub("저", "", text3)
+text4 <-  gsub(".", "", text3)
+
+text5 <-  text4[nchar(text4) < 5]
+text5
+text6 <-  text5[nchar(text4) > 1]
+text6
+
+text7 <- sort(table(text6), decreasing = T)
+
+text8 <- head(text7, 300)
+
+wordcloud2(text8, size= 5) 
+
